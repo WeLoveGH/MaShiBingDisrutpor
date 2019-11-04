@@ -12,6 +12,14 @@ api: http://lmax-exchange.github.io/disruptor/docs/index.html
 
 maven: https://mvnrepository.com/artifact/com.lmax/disruptor
 
+其他资源：
+
+https://www.lmax.com/disruptor
+
+Disruptor作者的演讲
+
+https://channel9.msdn.com/Blogs/Charles/YOW-2011-Martin-Thompson-On-Concurrent-Programming-and-Concurrency-Folklore
+
 ## Disruptor的特点
 
 对比ConcurrentLinkedQueue : 链表实现
@@ -38,7 +46,24 @@ RingBuffer的序号，指向下一个可用的元素
 >
 > 当Buffer被填满的时候到底是覆盖还是等待，由Producer决定
 >
-> 长度设为2的n次幂，利于二进制计算，例如：12%8 = 12 & (8 - 1)  pos = num & (size -1)
+>长度设为2的n次幂，利于二进制计算，例如：12%8 = 12 & (8 - 1)  抽象为公式就是 pos = num & (size -1)
+
+```java
+
+12  = 1100
+
+8-1 = 7 = 0111
+
+    1100  
+AND 0111
+--------
+    0100
+
+0100 = 4 
+
+12%8 = 4 这种取模的运算比较耗时，如果转换为 12&（8-1）=4，会非常的高效，所以，转换为 pos = num & (size -1) 来计算是一种非常聪明的方式
+
+```
 
 ## Disruptor开发步骤
 

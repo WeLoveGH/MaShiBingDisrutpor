@@ -1,17 +1,12 @@
 package com.mashibing.disruptor;
 
-import java.util.concurrent.Executor;
+import com.lmax.disruptor.RingBuffer;
+import com.lmax.disruptor.dsl.Disruptor;
+
 import java.util.concurrent.Executors;
 
-import com.lmax.disruptor.dsl.Disruptor;
-import com.lmax.disruptor.RingBuffer;
-import com.lmax.disruptor.util.DaemonThreadFactory;
-import java.nio.ByteBuffer;
-
-public class Main01
-{
-    public static void main(String[] args) throws Exception
-    {
+public class Main01 {
+    public static void main(String[] args) throws Exception {
         // The factory for the event
         LongEventFactory factory = new LongEventFactory();
 
@@ -19,6 +14,9 @@ public class Main01
         int bufferSize = 1024;
 
         // Construct the Disruptor
+        /**
+         * Create a new Disruptor. Will default to {@link com.lmax.disruptor.BlockingWaitStrategy} and {@link ProducerType}.MULTI
+         */
         Disruptor<LongEvent> disruptor = new Disruptor<>(factory, bufferSize, Executors.defaultThreadFactory());
 
         // Connect the handler
@@ -31,15 +29,15 @@ public class Main01
         RingBuffer<LongEvent> ringBuffer = disruptor.getRingBuffer();
 
         //官方例程
-        long sequence = ringBuffer.next();  // Grab the next sequence
-        try
-        {
-            LongEvent event = ringBuffer.get(sequence); // Get the entry in the Disruptor
+        // Grab the next sequence
+        long sequence = ringBuffer.next();
+        try {
+            // Get the entry in the Disruptor
+            LongEvent event = ringBuffer.get(sequence);
             // for the sequence
-            event.set(8888L);  // Fill with data
-        }
-        finally
-        {
+            // Fill with data
+            event.set(8888L);
+        } finally {
             ringBuffer.publish(sequence);
         }
 

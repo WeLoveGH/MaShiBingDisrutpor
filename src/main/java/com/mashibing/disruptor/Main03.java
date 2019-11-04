@@ -4,10 +4,8 @@ import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.util.DaemonThreadFactory;
 
-public class Main03
-{
-    public static void main(String[] args) throws Exception
-    {
+public class Main03 {
+    public static void main(String[] args) throws Exception {
         // Specify the size of the ring buffer, must be power of 2.
         int bufferSize = 1024;
 

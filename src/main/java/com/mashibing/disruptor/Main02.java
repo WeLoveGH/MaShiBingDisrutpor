@@ -4,10 +4,8 @@ import com.lmax.disruptor.*;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.util.DaemonThreadFactory;
 
-public class Main02
-{
-    public static void main(String[] args) throws Exception
-    {
+public class Main02 {
+    public static void main(String[] args) throws Exception {
         // The factory for the event
         LongEventFactory factory = new LongEventFactory();
 
@@ -72,8 +70,8 @@ public class Main02
             @Override
             public void translateTo(LongEvent event, long sequence, Object... objects) {
                 long result = 0;
-                for(Object o : objects) {
-                    long l = (Long)o;
+                for (Object o : objects) {
+                    long l = (Long) o;
                     result += l;
                 }
                 event.set(result);

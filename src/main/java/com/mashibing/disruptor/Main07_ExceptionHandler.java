@@ -9,10 +9,8 @@ import com.lmax.disruptor.dsl.ProducerType;
 
 import java.util.concurrent.*;
 
-public class Main07_ExceptionHandler
-{
-    public static void main(String[] args) throws Exception
-    {
+public class Main07_ExceptionHandler {
+    public static void main(String[] args) throws Exception {
         // The factory for the event
         LongEventFactory factory = new LongEventFactory();
 
@@ -59,8 +57,8 @@ public class Main07_ExceptionHandler
         ExecutorService service = Executors.newCachedThreadPool();
         for (long i = 0; i < threadCount; i++) {
             final long threadNum = i;
-            service.submit(()-> {
-                System.out.printf("Thread %s ready to start!\n", threadNum );
+            service.submit(() -> {
+                System.out.printf("Thread %s ready to start!\n", threadNum);
                 try {
                     barrier.await();
                 } catch (InterruptedException e) {
